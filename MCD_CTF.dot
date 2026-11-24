@@ -1,0 +1,169 @@
+graph MCD {
+  rankdir=LR;
+  graph [fontname="Helvetica", splines=spline, nodesep=0.7, ranksep=1.0, bgcolor="white"];
+  node [fontname="Helvetica", fontsize=12];
+  edge [fontname="Helvetica", fontsize=10, color="#555555"];
+
+  /* ---------- ENTITIES ---------- */
+
+  PARTICIPANT [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#2c3e50"><FONT COLOR="white"><B>PARTICIPANT</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_participant</U></TD></TR>
+    <TR><TD ALIGN="LEFT">pseudo (unique)</TD></TR>
+    <TR><TD ALIGN="LEFT">email (unique)</TD></TR>
+    <TR><TD ALIGN="LEFT">mdp_hash</TD></TR>
+    <TR><TD ALIGN="LEFT">date_inscription</TD></TR>
+    <TR><TD ALIGN="LEFT">pays [0,1]</TD></TR>
+    </TABLE>>];
+
+  JOUEUR [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#34495e"><FONT COLOR="white"><B>JOUEUR</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><I>(sous-type de PARTICIPANT)</I></TD></TR>
+    </TABLE>>];
+
+  ORGANISATEUR [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#34495e"><FONT COLOR="white"><B>ORGANISATEUR</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><I>(sous-type de PARTICIPANT)</I></TD></TR>
+    </TABLE>>];
+
+  EQUIPE [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#2c3e50"><FONT COLOR="white"><B>EQUIPE</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_equipe</U></TD></TR>
+    <TR><TD ALIGN="LEFT">nom (unique)</TD></TR>
+    </TABLE>>];
+
+  EVENEMENT [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#2c3e50"><FONT COLOR="white"><B>EVENEMENT</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_evenement</U></TD></TR>
+    <TR><TD ALIGN="LEFT">nom</TD></TR>
+    <TR><TD ALIGN="LEFT">description</TD></TR>
+    <TR><TD ALIGN="LEFT">date_debut</TD></TR>
+    <TR><TD ALIGN="LEFT">date_fin</TD></TR>
+    </TABLE>>];
+
+  INSCRIPTION [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#8e44ad">
+    <TR><TD BGCOLOR="#8e44ad"><FONT COLOR="white"><B>INSCRIPTION</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_inscription</U></TD></TR>
+    <TR><TD ALIGN="LEFT">date_inscription</TD></TR>
+    </TABLE>>];
+
+  DISQUALIFICATION [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#8e44ad">
+    <TR><TD BGCOLOR="#8e44ad"><FONT COLOR="white"><B>DISQUALIFICATION</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_disqualification</U></TD></TR>
+    <TR><TD ALIGN="LEFT">date_disqualification</TD></TR>
+    <TR><TD ALIGN="LEFT">motif</TD></TR>
+    </TABLE>>];
+
+  EPREUVE [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#2c3e50"><FONT COLOR="white"><B>EPREUVE</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_epreuve</U></TD></TR>
+    <TR><TD ALIGN="LEFT">titre</TD></TR>
+    <TR><TD ALIGN="LEFT">enonce</TD></TR>
+    <TR><TD ALIGN="LEFT">difficulte</TD></TR>
+    <TR><TD ALIGN="LEFT">points</TD></TR>
+    <TR><TD ALIGN="LEFT">flag_hash</TD></TR>
+    </TABLE>>];
+
+  DOMAINE [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#2c3e50"><FONT COLOR="white"><B>DOMAINE</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_domaine</U></TD></TR>
+    <TR><TD ALIGN="LEFT">nom (unique)</TD></TR>
+    </TABLE>>];
+
+  INDICE [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#2c3e50"><FONT COLOR="white"><B>INDICE</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_indice</U></TD></TR>
+    <TR><TD ALIGN="LEFT">texte</TD></TR>
+    <TR><TD ALIGN="LEFT">cout</TD></TR>
+    </TABLE>>];
+
+  SOUMISSION [shape=plaintext label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5" COLOR="#2c3e50">
+    <TR><TD BGCOLOR="#2c3e50"><FONT COLOR="white"><B>SOUMISSION</B></FONT></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>id_soumission</U></TD></TR>
+    <TR><TD ALIGN="LEFT">date_heure</TD></TR>
+    <TR><TD ALIGN="LEFT">flag_propose</TD></TR>
+    <TR><TD ALIGN="LEFT">resultat</TD></TR>
+    </TABLE>>];
+
+  /* ---------- ASSOCIATIONS ---------- */
+  node [shape=ellipse, style=filled, fillcolor="#eaf2ff", fontsize=11, color="#2c3e50"];
+
+  SPEC1 [label="T,X", shape=circle, width=0.45, height=0.45, fixedsize=true, fillcolor="#f2f2f2", fontsize=10];
+  CREE_EQUIPE [label="CREE\n(capitaine)"];
+  MEMBRE [label="MEMBRE\ndate_arrivee"];
+  CREE_EVT [label="CREE_EVENEMENT"];
+  INS_EQ [label="CONCERNE_EQUIPE"];
+  INS_EVT [label="CONCERNE_EVENEMENT"];
+  DISQ_DE [label="SANCTIONNE"];
+  DE_EVT [label="APPARTIENT"];
+  CREE_EPR [label="CREE_EPREUVE"];
+  DE_DOMAINE [label="RELEVE_DE"];
+  A_INDICE [label="POSSEDE"];
+  DEBLOQUE [label="DEBLOQUE\ndate_deblocage"];
+  FAIT [label="FAIT"];
+  CONCERNE_SOUM [label="PORTE_SUR"];
+
+  /* ---------- EDGES WITH CARDINALITIES ---------- */
+  edge [arrowhead=none];
+
+  PARTICIPANT -- SPEC1;
+  SPEC1 -- JOUEUR;
+  SPEC1 -- ORGANISATEUR;
+
+  JOUEUR -- CREE_EQUIPE [taillabel="0,n", labeldistance=2.2];
+  CREE_EQUIPE -- EQUIPE [taillabel="1,1", labeldistance=2.2];
+
+  JOUEUR -- MEMBRE [taillabel="0,1", labeldistance=2.2];
+  MEMBRE -- EQUIPE [taillabel="1,5", labeldistance=2.2];
+
+  ORGANISATEUR -- CREE_EVT [taillabel="0,n", labeldistance=2.2];
+  CREE_EVT -- EVENEMENT [taillabel="1,1", labeldistance=2.2];
+
+  EQUIPE -- INS_EQ [taillabel="0,n", labeldistance=2.2];
+  INS_EQ -- INSCRIPTION [taillabel="1,1", labeldistance=2.2];
+
+  EVENEMENT -- INS_EVT [taillabel="0,n", labeldistance=2.2];
+  INS_EVT -- INSCRIPTION [taillabel="1,1", labeldistance=2.2];
+
+  INSCRIPTION -- DISQ_DE [taillabel="0,1", labeldistance=2.2];
+  DISQ_DE -- DISQUALIFICATION [taillabel="1,1", labeldistance=2.2];
+
+  EVENEMENT -- DE_EVT [taillabel="1,n", labeldistance=2.2];
+  DE_EVT -- EPREUVE [taillabel="1,1", labeldistance=2.2];
+
+  ORGANISATEUR -- CREE_EPR [taillabel="0,n", labeldistance=2.2];
+  CREE_EPR -- EPREUVE [taillabel="1,1", labeldistance=2.2];
+
+  EPREUVE -- DE_DOMAINE [taillabel="1,1", labeldistance=2.2];
+  DE_DOMAINE -- DOMAINE [taillabel="0,n", labeldistance=2.2];
+
+  EPREUVE -- A_INDICE [taillabel="0,n", labeldistance=2.2];
+  A_INDICE -- INDICE [taillabel="1,1", labeldistance=2.2];
+
+  EQUIPE -- DEBLOQUE [taillabel="0,n", labeldistance=2.2];
+  DEBLOQUE -- INDICE [taillabel="0,n", labeldistance=2.2];
+
+  JOUEUR -- FAIT [taillabel="0,n", labeldistance=2.2];
+  FAIT -- SOUMISSION [taillabel="1,1", labeldistance=2.2];
+
+  EPREUVE -- CONCERNE_SOUM [taillabel="0,n", labeldistance=2.2];
+  CONCERNE_SOUM -- SOUMISSION [taillabel="1,1", labeldistance=2.2];
+
+  /* ---------- LAYOUT HINTS ---------- */
+  { rank=same; JOUEUR; ORGANISATEUR; }
+  { rank=same; EQUIPE; EVENEMENT; }
+  { rank=same; INSCRIPTION; }
+  { rank=same; DISQUALIFICATION; EPREUVE; }
+  { rank=same; DOMAINE; INDICE; SOUMISSION; }
+}
